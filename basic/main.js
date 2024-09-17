@@ -79,13 +79,36 @@ const scene =  new THREE.Scene()
 //object
 
 const goe = new THREE.IcosahedronGeometry(1.0, 2)
-const mat = new THREE.MeshBasicMaterial({
-    color: 0xccff,
+const mat = new THREE.MeshStandardMaterial({
+    color: 0xffaaaa,
+    flatShading: true
 
+})  
+
+const wireMat  =  new THREE.MeshBasicMaterial({
+    color: 0xffffff,
+    wireframe:  true
 })
+
+const wireMesh =  new THREE.Mesh(goe, wireMat)
 
 const mesh  =  new THREE.Mesh(goe, mat )
 scene.add(mesh)
 
-renderer.render(scene, camera)
+scene.add(wireMesh)
 
+// light 
+
+const light   =  new THREE.HemisphereLight(0x000, 0xfff)
+
+scene.add(light)
+
+// animate 
+
+function animate() {
+    requestAnimationFrame(animate)
+    renderer.render(scene, camera)
+
+}
+
+animate()
