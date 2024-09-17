@@ -5,11 +5,11 @@ import * as THREE from 'three'
 // 1. create  a scene
 
 const scene =  new THREE.Scene();
-scene.background = new THREE.Color('#F0F0F0');
+scene.background = new THREE.Color('#a0a0a0');
 
 // 2. Add the camera
-const  camera =  new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1 , 1000);
-camera.position.z = 5;
+const  camera =  new THREE.PerspectiveCamera(130, window.innerWidth  / window.innerHeight, 0.1, 500);
+camera.position.z = 2;
 
 
 //3. create and adda cube object 
@@ -26,7 +26,7 @@ scene.add(cube);
 // 4  add lighting
 const light  =  new THREE.DirectionalLight(0x9CDBA6, 10);
 
-light.position.set(1,1,1);
+light.position.set(1,3,5);
 scene.add(light);
 
 
@@ -40,8 +40,8 @@ document.body.appendChild(renderer.domElement);
 
 function animate() {
     requestAnimationFrame(animate);
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
+    cube.rotation.x += 0.03;
+    cube.rotation.y += 0.02;
 
 
     renderer.render(scene, camera); 
