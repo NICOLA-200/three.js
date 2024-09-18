@@ -82,6 +82,8 @@ camera.position.z =  3;
 // orbitcontrols 
 
 const controls = new OrbitControls(camera , renderer.domElement)
+controls.enableDamping = true;
+controls.dampingFactor = 0.03;
 
 // scene 
 const scene =  new THREE.Scene()
@@ -96,6 +98,10 @@ const mat = new THREE.MeshStandardMaterial({
 
 })  
 
+const  material =  new THREE.MeshBasicMaterial({
+    color: 0x00ff00
+})
+
 const wireMat  =  new THREE.MeshBasicMaterial({
     color: 0xfffddf,
     wireframe:  true,
@@ -105,7 +111,7 @@ const wireMat  =  new THREE.MeshBasicMaterial({
 
 const wireMesh =  new THREE.Mesh(goe, wireMat)
 
-const mesh  =  new THREE.Mesh(goe, mat )
+const mesh  =  new THREE.Mesh(goe, material )
 scene.add(mesh)
 
 mesh.add(wireMesh)
