@@ -1,4 +1,5 @@
 import * as THREE from "three"
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 const w = innerWidth
 const h =  innerHeight
@@ -12,11 +13,14 @@ camera.position.z = 5;
 const renderer = new THREE.WebGLRenderer()
 renderer.setSize(w , h )
 
+
+
+
 document.body.appendChild(renderer.domElement)
 
 const geometry =  new THREE.BoxGeometry();
-const material = new THREE.MeshStandardMaterail({
-    color: 0xffff00
+const material = new THREE.MeshStandardMaterial({
+    color: 0xfff
 })
 
 const cube  = new THREE.Mesh(geometry, material)
@@ -30,8 +34,8 @@ scene.add(hemiLight)
 function animate() {
     requestAnimationFrame(animate)
 
-    cube.rotation.x = 0.01
-    cube.rotation.y = 0.02
+    cube.rotation.x += 0.01
+    cube.rotation.y += 0.02
     renderer.render(scene, camera )
 }
 
