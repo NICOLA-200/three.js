@@ -52,6 +52,9 @@
 
 
 import * as THREE from "three"
+// import { OrbitControls } from '/jsm/controls/OrbitControls.js'
+// import { OrbitControls} from 'three/addons/jsm/controls/OrbitControls.js'
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 const w = innerWidth
 const h =  innerHeight
@@ -67,10 +70,18 @@ document.body.appendChild(renderer.domElement)
 
 
 
+
+
+
+
+
 //camera
 const  camera =  new THREE.PerspectiveCamera(75, w / h, 0.1, 10)
 camera.position.z =  3;
 
+// orbitcontrols 
+
+const controls = new OrbitControls(camera , renderer.domElement)
 
 // scene 
 const scene =  new THREE.Scene()
