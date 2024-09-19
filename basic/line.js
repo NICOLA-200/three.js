@@ -1,4 +1,4 @@
-import  * as THREE from 'THREE'
+import  * as THREE from 'three'
 
 const  renderer =   new THREE.WebGLRenderer()
 renderer.setSize(window.innerWidth, window.innerHeight)
@@ -6,7 +6,7 @@ document.body.appendChild(renderer.domElement)
 
 
 const camera  = new THREE.PerspectiveCamera(45,window.innerWidth / window.innerHeight, 1 , 500)
-camera.position.z = 5;
+camera.position.z = 50;
 
 camera.lookAt(0,0,0)
 
@@ -16,7 +16,7 @@ const scene =  new  THREE.Scene();
 
 
 const material  = new THREE.LineBasicMaterial({
-    color: 0x0000ff
+    color: 0xffffff
 })
 
 const points = []
