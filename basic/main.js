@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import getStarfield from "./getStarField.js"
+import { getFresnelMat } from './getFresnelMat.js';
 
 
 // const h = window.innerHeight;
@@ -108,7 +109,8 @@ const loader =  new THREE.TextureLoader();
 
 const goe = new THREE.IcosahedronGeometry(1, 12)
 const mat = new THREE.MeshStandardMaterial({
-    map: loader.load("./earthmap1k.jpg")
+    map: loader.load("./earthmap1k.jpg"),
+    
 
 })  
 
@@ -133,21 +135,57 @@ const earthMesh  =  new THREE.Mesh(goe, mat )
 scene.add(earthMesh)
 
 
+const lightMat = new THREE.MeshBasicMaterial({
+    map: loader.load("./03_earthlights1k.jpg"),
+    blending: THREE.AdditiveBlending,
+  });
+  
+
+  const cloudsMat = new THREE.MeshStandardMaterial({
+    map: loader.load("./04_earthcloudmap.jpg"),
+    transparent: true,
+    opacity: 0.8,
+    blending: THREE.AdditiveBlending,
+    alphaMap: loader.load('./05_earthcloudmaptrans.jpg'),
+    alphaTest: 0.3,
+  });
+  const cloudsMesh = new THREE.Mesh(goe, cloudsMat);
+  cloudsMesh.scale.setScalar(1.003);
+
+
+  const fresnelMat = getFresnelMat();
+const glowMesh = new THREE.Mesh(goe, fresnelMat);
+glowMesh.scale.setScalar(1.01);
+
+  
+
+// const cloudsMat =  new THREE.MeshStandardMaterial(
+//     map: loader.load('./')
+// )
+const lightMesh =  new THREE.Mesh(goe, lightMat)
+
 
 // light 
 
-const light   =  new THREE.HemisphereLight(0x0099ff, 0xaa55ff)
+// const light   =  new THREE.HemisphereLight(0x0099ff, 0xaa55ff)
+
+const light = new THREE.DirectionalLight(0xffffff)
+light.position.set(2, 0.5, 1.5 )
 
 scene.add(light)
+scene.add(lightMesh )
+scene.add(cloudsMesh)
+scene.add(glowMesh);    
 
 // animate 
 
 function animate() {
     requestAnimationFrame(animate)
     earthMesh.rotation.y +=0.001;
-    
+     lightMesh.rotation.y +=0.001;
+     cloudsMesh.rotation.y +=0.001
     renderer.render(scene, camera)
 
-}
+} 
 
 animate()
