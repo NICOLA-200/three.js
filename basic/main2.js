@@ -14,12 +14,13 @@ const renderer = new THREE.WebGLRenderer()
 renderer.setSize(w , h )
 
 
-
+new OrbitControls(camera ,renderer.domElement)
 
 document.body.appendChild(renderer.domElement)
 
-const geometry =  new THREE.BoxGeometry();
+const geometry =  new THREE.IcosahedronGeometry(1, 3);
 const material = new THREE.MeshStandardMaterial({
+    flatShading: true,
     color: 0xfff
 })
 
