@@ -1,6 +1,11 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import spline from './spline.js';
+
+import { EffectComposer } from "jsm/postprocessing/EffectComposer.js";
+import { RenderPass } from "jsm/postprocessing/RenderPass.js";
+import { UnrealBloomPass } from "jsm/postprocessing/UnrealBloomPass.js";
+
 // import getStarfield from "./getStarField.js"
 // import { getFresnelMat } from './getFresnelMat.js';
 
@@ -108,6 +113,17 @@ renderer.toneMapping = THREE.ACESFilemicPoneMapping;
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 document.body.appendChild(renderer.domElement);
 
+const renderScene =  new RenderPass( scene, camera)
+const bloomPass =  new UnrealBloomsPass( new THREE.Vector2(w,h), 1.5, 0.4, 100)
+bloomPass.threshold = 0.002
+bloomPass.strength = 3.5
+bloomPass.radius = 0;
+const composer = new EffectComposer(renderer);
+composer.addPass(renderScene);
+composer.addPass(bloomPass);
+
+
+
 const controls = new OrbitControls(camera , renderer.domElement)
 controls.enableDamping = true;
 controls.dampingFactor = 0.03;
@@ -119,7 +135,7 @@ function animate(t = 0) {
     updateCamera(t)
 
     controls.update()
-    renderer.render(scene, camera); 
+    composer.render(scene, camera); 
 }
 
 animate();
