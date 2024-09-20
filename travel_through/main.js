@@ -48,14 +48,23 @@ const  tubeMat =  new THREE.MeshBasicMaterial({
 const tube = new THREE.Mesh(tubeGeo, tubeMat)
 
 function updateCamera(t) {
-  const time = t * 0.1;
-  const looptime = 10 * 1000;
-  const p = (time % looptime) / looptime;
+  const time = t * 0.1;  // Scale down the time
+  const looptime = 10 * 1000;  // Time for one loop (10 seconds)
+  
+  const p = (time % looptime) / looptime;  // Calculate position on the path (normalized 0 to 1)
+  
+  // Get the position at the point 'p' along the tube path
   const pos = tubeGeo.parameters.path.getPointAt(p);
-  const lookAt = tubeGeo.parameters.path.getPointAt((p + 0.03) % 1);
+  // Get the tangent (direction of the path) at the point 'p'
+  const tangent = tubeGeo.parameters.path.getTangentAt(p).normalize();
+  // Set the camera's position to the current position on the path
   camera.position.copy(pos);
+  // Add the tangent to the current position to calculate where the camera should "look at"
+  const lookAt = new THREE.Vector3().copy(pos).add(tangent);
+  // Make the camera look in the direction of the tube (along the tangent)
   camera.lookAt(lookAt);
 }
+
 
 scene.add(tube);
 
